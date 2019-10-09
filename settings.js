@@ -1,4 +1,4 @@
-module.exports.token = "mfa.4i8kElX24pD1HW48-ZHjyex7z6EVMdtQ1SNIFwCUArPxjFRX0iMPwwPTYuEHu56_VjOormaDwiKuO9SYHKeW";
+module.exports.token = "INSERT TOKEN";
 
 module.exports.prefix = "!mal";
 
