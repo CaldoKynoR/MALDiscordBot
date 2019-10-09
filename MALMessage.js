@@ -59,9 +59,30 @@ class MALMessage extends UMessage {
                     let popularity = $('span[class="numbers popularity"]', animeHTML).find('strong')[0].children[0].data;
                     let producer = $('span[class="information studio author"]', animeHTML).find('a')[0].children[0].data;
                     let episodes = $('div[class="spaceit"]', animeHTML).find("span")[0].next.data.replace(" ", "").replace("\n", "");
-                    let season = $('span[class="information season"]', animeHTML).find('a')[0].children[0].data;
+                    let season =  $('span[class="information season"]', animeHTML).find('a')[0];
+                    let type = $('#content > table > tbody > tr > td.borderClass > div > div:nth-child(12) > a', animeHTML).text().replace(" ", "");
+                    let duration = $('#content > table > tbody > tr > td.borderClass > div > div:nth-child(21)', animeHTML).text();
+                    console.log("duration:" + " " + duration);
+                    console.log ("Season: " + season)
+                    
+                    if(!duration.includes("Duration:"))
+                    {
+                        duration = null;
+                    } else {
+                        duration = duration.replace("Duration:").replace(" ", "").replace("\n", "");
+                    }
+
+                    if(season)
+                    {
+                        season = $('span[class="information season"]', animeHTML).find('a')[0].children[0].data;
+                    }
                     
                     let kissAnimeLink = kissAnimeLinkBuilder(name.split(" "), 0);
+
+
+                    var elements = [synopsis, rating, ranked, popularity, producer, episodes, season, type, duration];
+
+                    validAnimeProperties(elements);
 
                     channel.send({
                         embed: {
@@ -74,37 +95,47 @@ class MALMessage extends UMessage {
                             fields: [
                                 {
                                     name: "Producer",
-                                    value: producer,
+                                    value: elements[4],
                                     inline: true
                                 },
                                 {
                                     name: "Rating",
-                                    value: rating,
+                                    value: elements[1],
                                     inline: true
                                 },
                                 {
                                     name: "Season",
-                                    value: season,
+                                    value: elements[6],
                                     inline: true
                                 },
                                 {
                                     name: "Episode(s)",
-                                    value: episodes,
+                                    value: elements[5],
                                     inline: true
                                 },
                                 {
                                     name: "Ranked",
-                                    value: ranked,
+                                    value: elements[2],
                                     inline: true
                                 },
                                 {
                                     name: "Popularity",
-                                    value: popularity,
+                                    value: elements[3],
+                                    inline: true
+                                },
+                                {
+                                    name: "Type",
+                                    value: elements[7],
+                                    inline: true
+                                },
+                                {
+                                    name: "Duration",
+                                    value: elements[8],
                                     inline: true
                                 },
                                 {
                                     name: "Synopsis",
-                                    value: synopsis,
+                                    value: elements[0],
                                     inline: false                        
                                 },
                                 {
@@ -169,40 +200,52 @@ class MALMessage extends UMessage {
     }
 
 
-function validAnimeProperties(synopsis, rating, ranked, popularity, producer, episodes, season) {
-    if (synopsis) {
+function validAnimeProperties(elements) {
+    if (!elements[0]) {
         console.error("There was no synopsis found! Sorry! :(");
-        synopsis = "No synoposis found.";
+        elements[0] = "No synoposis found.";
     }
 
-    if (rating) {
+    if (!elements[1]) {
         console.error("There was no rating found! Sorry! :(");
-        rating = "?";
+        elements[1] = "?";
     }
 
-    if (ranked) {
+    if (!elements[2]) {
         console.error("There was no ranking found! Sorry! :(");
-        ranked = "#?";
+        elements[2] = "#?";
     }
 
-    if (popularity) {
+    if (!elements[3]) {
         console.error("There was no popularity ranking found! Sorry! :(");
-        popularity = "#?";
+        elements[3] = "#?";
     }
 
-    if (producer) {
+    if (!elements[4]) {
         console.error("There was no producer found! Sorry! :(");
-        producer = "?";
+        elements[4] = "?";
     }
 
-    if (episodes) {
+    if (!elements[5]) {
         console.error("There was no episodes found! Sorry! :(");
-        episodes = "?";
+        elements[5] = "?";
     }
 
-    if (season) {
+    if (!elements[6]) {
         console.error("There was no season found! Sorry! :(")
-        season = "?";
+        elements[6] = "?";
+    }
+
+    if (!elements[7]) {
+        console.error("There was no type found! Sorry! :(")
+        elements[7] = "TV Series";
+    }
+
+    if (!elements[8]) {
+        console.error("There was no duration found! Sorry! :(");
+        elements[8] = "?";
+        if(elements[7] === "TV" || elements[7] === "TV Series")
+        elements[8] = "~24mins"
     }
 
     return true;

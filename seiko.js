@@ -19,18 +19,16 @@ bot.on("message", function (message) {
         } else {
             args.splice(0, 1);
             if (args[0] === "search") {
-                if (args[1] === "anime") {
-                    let query = stringBuilder(args, 2);
-                    if (query.length <= 3) {
-                        message.channel.send("Your search query must be higher than 3 characters.");
-                    } else {
-                        console.log("searching for " + query);
-                        malmessage.search(query);
-                    }
 
+                let query = stringBuilder(args, 1);
+                if (query.length <= 3) {
+                    message.channel.send("Your search query must be higher than 3 characters.");
                 } else {
-                    message.channel.send("Invalid arguments.")
+                    console.log("searching for " + query);
+                    malmessage.search(query);
                 }
+
+
             } else {
                 message.channel.send("Invalid arguments.")
             }
