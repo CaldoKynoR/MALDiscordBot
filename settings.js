@@ -2,7 +2,7 @@ module.exports.token = "INSERT TOKEN";
 
 module.exports.prefix = "!mal";
 
-module.exports.name = "Fukoro";
+module.exports.name = "MALDiscord";
 module.exports.icon = "https://i.imgur.com/rnDYxPH.jpg";
 
 module.exports.image = "https://myanimelist.cdn-dena.com/img/sp/icon/apple-touch-icon-256.png";
