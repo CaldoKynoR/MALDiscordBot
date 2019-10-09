@@ -1,5 +1,8 @@
 const settings = require('./settings.js');
 
+/**
+ * UMessage is the basic principle class that contains the channel, author, and author url.
+ */
 class UMessage {
     constructor(channel)
     {

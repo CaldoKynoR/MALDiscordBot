@@ -5,6 +5,9 @@ const bot = new Discord.Client();
 
 const MALMessage = require('./MALMessage.js');
 
+/**
+ * An event being called when the anime bot prefix is sent.
+ */
 bot.on("message", function (message) {
 
     if (message.type == "text" && !validGuild(message.guild.id))
@@ -14,6 +17,7 @@ bot.on("message", function (message) {
         let args = message.content.split(" ");
         let malmessage = new MALMessage(message.channel);
 
+        
         if (args.length <= 1) {
             malmessage.sendDefault();
         } else {
@@ -38,6 +42,11 @@ bot.on("message", function (message) {
     }
 });
 
+/**
+ * Checks if the anime bot prefix was used in a guild that permits the bot.
+ * @param {GuildID} guildSnowflake Checks if the message was sent to a guild that allows the bot
+ * @return {boolean} true if it includes the guild, false if not allowed 
+ */
 function validGuild(guildSnowflake) {
     if (settings.guilds.includes(guildSnowflake)) {
         return true;
@@ -45,6 +54,11 @@ function validGuild(guildSnowflake) {
     return false;
 }
 
+/**
+ * Builds a string for the anime search to function.
+ * @param {Array[]} array the array that will be used to construct a string. The anime link => The%20anime%20link
+ * @param {number (int)} index skips the first few entries. For example, 1. The anime link => only interates anime and link
+ */
 function stringBuilder(array, index) {
     let string = "";
 
