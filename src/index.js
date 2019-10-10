@@ -57,7 +57,7 @@ function validGuild(guildSnowflake) {
 /**
  * Builds a string for the anime search to function.
  * @param {Array[]} array the array that will be used to construct a string. The anime link => The%20anime%20link
- * @param {number (int)} index skips the first few entries. For example, 1. The anime link => only interates anime and link
+ * @param {number} index skips the first few entries. For example, 1. The anime link => only interates anime and link
  */
 function stringBuilder(array, index) {
     let string = "";
